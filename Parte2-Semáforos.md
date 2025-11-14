@@ -73,3 +73,64 @@ O valor final é menor, porque várias threads sobrescrevem valores entre si.
 O comportamento nunca é igual (nondeterminístico).
 
 Esse código feito demonstra exatamente um cenário com condição de corrida.
+
+
+---
+
+# Experimento 2 — Correção com Semáforo Binário Justo
+
+Para resolver o problema da corrida, usamos um semáforo binário. Basicamente um “guardião” da parte crítica do código. Ele vai garantir que:
+
+só uma thread por vez pode mexer no contador.
+
+evita que as operações se misturem de forma errada.
+
+mantém ordem justa entre as threads quando configurado com true (modo FIFO).
+
+Outro ponto importante: quando uma thread faz release(), isso vai garantir que a próxima thread que acordar com acquire() vai enxergar o valor atualizado corretamente. Ou seja, o semáforo também vai resolver problemas de visibilidade.
+
+Código do experimento 1 corrigido:
+
+
+import java.util.concurrent.*;
+
+public class CorridaComSemaphore {
+    static int count = 0;
+    static final Semaphore sem = new Semaphore(1, true); // FIFO
+
+    public static void main(String[] args) throws Exception {
+        int T = 8, M = 250_000;
+        ExecutorService pool = Executors.newFixedThreadPool(T);
+
+        Runnable r = () -> {
+            for (int i = 0; i < M; i++) {
+                try {
+                    sem.acquire();  // entrada na seção crítica
+                    count++;
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } finally {
+                    sem.release();  // libera para próxima thread
+                }
+            }
+        };
+
+        long t0 = System.nanoTime();
+        for (int i = 0; i < T; i++) pool.submit(r);
+
+        pool.shutdown();
+        pool.awaitTermination(1, TimeUnit.MINUTES);
+        long t1 = System.nanoTime();
+
+        System.out.printf("Esperado=%d, Obtido=%d, Tempo=%.3fs%n",
+                T * M, count, (t1 - t0) / 1e9);
+    }
+}
+
+Resultado
+
+-Esperado = 2000000 
+ 
+-Obtido   = 2000000
+
+---
