@@ -1,4 +1,4 @@
-**Relatório — Parte 1: Jantar dos Filósofos**
+# Relatório — Parte 1: Jantar dos Filósofos
 
 O Jantar dos Filósofos é um problema clássico usado para explicar dificuldades de coordenação em sistemas concorrentes.
 A situação é simples: cinco filósofos sentam ao redor de uma mesa circular. Cada filósofo alterna entre pensar e comer.
@@ -11,7 +11,7 @@ O desafio da atividade é criar um protocolo que permita que todos comam, sem tr
 
 ---
 
-**Conceitos importantes para resolver o problema:**
+## Conceitos importantes para resolver o problema:
 
 1- Exclusão Mútua
 
@@ -65,7 +65,7 @@ Para que não ocorra essa deadlock, temos que impedir essa espera circular. Ent�
 ---
 
 
-**A maneira mais lógica de resolver é, por exemplo:**
+###  A maneira mais lógica de resolver é, por exemplo:
 
 -Filósofos com número ímpar pegam primeiro o garfo da direita e depois o da esquerda.
 
@@ -84,7 +84,7 @@ Essa solução básica e muito famosa:
 
 ---
 
-**Código lógico que resolve o problema do JANTAR DOS FILÓSOFOS:**
+## Código lógico que resolve o problema do JANTAR DOS FILÓSOFOS:
 
 obs: de acordo com a lógica explicada anteriormente :)
 
@@ -120,3 +120,24 @@ para cada filósofo f de 0 até N-1:
             liberar(garfo_direita)
 
             estado[f] = "pensando"
+
+
+### Condições de Coffman aplicadas ao problema
+
+O deadlock no jantar dos filósofos comentado anteriormente, acontece porque as quatro condições de Coffman se mantêm ativas:
+
+(1) Exclusão mútua: garfos são recursos exclusivos.
+
+(2) Hold and Wait: cada filósofo pega um garfo e espera pelo outro.
+
+(3) Não preempção: ninguém pode tomar um garfo da mão de outro.
+
+(4) Espera circular: cada filósofo espera por um garfo que está na posse do vizinho.
+
+**Solução proposta**
+
+A estratégia par/ímpar dada de exemplo, quebra explicitamente a condição (4) de Espera circular, impondo uma ordem na aquisição dos garfos. Quando eliminamos essa condição (4), o ciclo travado deixa de existir e o sistema evita deadlock.
+
+**Justiça e Progresso**
+
+Como pelo menos um filósofo sempre conseguirá adquirir ambos os garfos, o sistema continua avançando (progresso). Como todos liberam os garfos e os demais tentam novamente em uma ordem não circular, nenhum filósofo fica "com fome"(justiça).
