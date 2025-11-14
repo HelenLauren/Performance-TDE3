@@ -133,4 +133,29 @@ Resultado
  
 -Obtido   = 2000000
 
+
+### Agora o programa acerta exatamente o valor final.
+
+Não existe mais perda de incrementos nem resultados estranhos.
+
+O semáforo faz o papel de “um por vez”, então a atualização do contador fica 100% correta, mesmo com várias threads trabalhando juntas.
+
+---
+
+Usar um semáforo deixa o programa um pouco mais lento, e isso é totalmente normal.
+
+Pois há custo de bloquear e desbloquear as threads, colocar as threads numa fila de espera e também as trocas de contexto internas da JVM.
+
+
+Mas em troca ganhamos correção garantida, o que é bem mais importante quando precisamos de precisão.
+
+
+Funciona bem porque o semáforo impede exatamente o que causava o problema anterior:
+
+só uma thread entra de cada vez na área crítica, removendo completamente a possibilidade de uma atualização sobrescrever a outra.
+
+o release() seguido de acquire() cria a relação de happens-before, garantindo que o valor visível é o mais recente.
+
+Com isso, a corrida desaparece e o comportamento fica totalmente previsível e correto.
+
 ---
