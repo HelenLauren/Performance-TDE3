@@ -140,4 +140,15 @@ A estratégia par/ímpar dada de exemplo, quebra explicitamente a condição (4)
 
 **Justiça e Progresso**
 
-Como pelo menos um filósofo sempre conseguirá adquirir ambos os garfos, o sistema continua avançando (progresso). Como todos liberam os garfos e os demais tentam novamente em uma ordem não circular, nenhum filósofo fica "com fome"(justiça).
+Como pelo menos um filósofo sempre conseguirá adquirir ambos os garfos, o sistema continua avançando (progresso). 
+Porém não aplica a justiça, pois a estratégia par/ímpar não garante que todos tenham a mesma chance de comer alguns filósofos podem ficar esperando por longos períodos, já que não existe ordem ou prioridade de atendimento.
+
+Para realmente impedir a fome total, seria necessário um mecanismo adicional, como:
+
+**semáforos** justos (fair = true),
+
+ou controle explícito de ordem (fila de requisições).
+
+Ou seja:
+
+A solução par/ímpar cumpre o requisito de eliminar deadlock, mas não vai garantir justiça total...
