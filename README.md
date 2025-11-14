@@ -17,3 +17,11 @@ https://www.linkedin.com/pulse/dining-philosopher-problem-explanation-implementa
 https://www.geeksforgeeks.org/operating-systems/dining-philosophers-problem/
 
 ### Parte 2:
+
+https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Semaphore.html
+
+https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Semaphore.html
+
+https://techvidvan.com/tutorials/semaphore-in-java/
+
+https://www.geeksforgeeks.org/java/semaphore-in-java/ 

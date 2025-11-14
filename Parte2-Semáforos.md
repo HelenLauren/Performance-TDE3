@@ -159,3 +159,21 @@ o release() seguido de acquire() cria a relação de happens-before, garantindo 
 Com isso, a corrida desaparece e o comportamento fica totalmente previsível e correto.
 
 ---
+
+# Conclusão
+
+Os testes mostraram claramente o seguinte:
+
+Sem nenhum tipo de sincronização, várias threads mexendo no mesmo contador ao mesmo tempo acabam estragando o resultado.
+
+O count++ parece simples, mas por trás dele existem várias etapas que podem se misturar entre as threads gerando números errados.
+
+Quando usamos um semáforo binário, o problema desaparece.
+
+Ele funciona como um “porteiro”: deixa só uma thread por vez entrar na parte do código que mexe no contador.
+
+Com isso o valor final sempre sai correto, sem perda de incrementos.
+
+A única desvantagem é que o programa fica um pouco mais lento, porque agora as threads precisam esperar umas pelas outras. Mas em compensação o resultado fica 100% confiável.
+
+No fim, o semáforo garante ordem, segurança e resultados certos. Mesmo que custe um pouco de desempenho, um trade-off totalmente esperado em problemas de concorrência.
