@@ -2,7 +2,7 @@
 
 O projeto está separado em partes, assim como no arquivo enviado pelo professor. Cada integrante pesquisou e fez uma parte da atividade.
 
-### Link vídeo:
+### Link vídeo: https://www.youtube.com/watch?v=8eg9gIblRRM
 
 ---
 
